@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body {
+    font-family:'Times New Roman', Times, serif;
+    background-color: #d4eeff;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    
+}
+
+form {
+    margin-bottom: 20px;
+    
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"] {
+    width: 50%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background-color: lightblue;
+    border: none;
+    padding: 10px 20px;
+    color: black;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: teal;
+    color: white;
+}
+
+.weather-info {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.messages {
+    background-color: #ffcccc;
+    padding: 10px;
+    border: 1px solid #ff0000;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.result{
+    text-align: left;
+}
+
+    </style>
+</head>
+<body>
+    <h1>Weather App</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        <label for="city">Enter City Name</label>
+        <input type="text" id="city" name="city" required>
+        <button type="submit">Check Weather</button>
+    </form>
+    <div class="result">
+    {% if weather_data %}
+    <h2>The Weather is:</h2>
+    <p>Weather of: {{ weather_data.city }}</p>
+    <p>Temperature (Celsius): {{ weather_data.temperature }}°</p>
+    <p>Feels like in (Celsius): {{ weather_data.feels_like }}°</p>
+    <p>Pressure: {{ weather_data.pressure }} hPa</p>
+    <p>Humidity: {{ weather_data.humidity }}%</p>
+    <p>Wind Speed: {{ weather_data.wind_speed }} km/h</p>
+    <p>Sunrise at {{ weather_data.sunrise }} and Sunset at {{ weather_data.sunset }}</p>
+    <p>Cloud: {{ weather_data.cloudy }}%</p>
+    <p>Info: {{ weather_data.description }}</p>
+    {% endif %}
+
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+</body>
+</html>
